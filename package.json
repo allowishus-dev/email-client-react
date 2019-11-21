@@ -1,0 +1,36 @@
+{
+    "name": "email-client-react",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "migrations:make": "knex migrate:make",
+        "migrate:run": "knex migrate:latest",
+        "migrate:rollback": "knex migrate:rollback",
+        "seed:make": "knex seed:make",
+        "seed:run": "knex seed:run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/allowishus-dev/email-client-react.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/allowishus-dev/email-client-react/issues"
+    },
+    "homepage": "https://github.com/allowishus-dev/email-client-react#readme",
+    "dependencies": {
+        "bcrypt": "^3.0.6",
+        "body-parser": "^1.19.0",
+        "email-validator": "^2.0.4",
+        "express": "^4.17.1",
+        "express-rate-limit": "^5.0.0",
+        "knex": "^0.20.1",
+        "mysql2": "^2.0.0",
+        "nodemailer": "^6.3.1",
+        "objection": "^1.6.11"
+    }
+}
