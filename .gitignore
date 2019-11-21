@@ -1,3 +1,7 @@
+# Credentials
+mysql_credentials.js
+email_credentials.js
+
 # Logs
 logs
 *.log
