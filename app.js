@@ -10,15 +10,26 @@ const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 10 // limit each IP to 10 requests per windowMs
 });
+
+const emailLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 10 requests per windowMs
+});
    
 //  apply to all requests
-app.use("/users/login", authLimiter);
 app.use("/users/signup", authLimiter);
 app.use("/users/activate", authLimiter);
+app.use("/users/login", authLimiter);
+app.use("/users/change_password", authLimiter);
+app.use("/users/forgot_password", authLimiter);
+app.use("/emails/login", emailLimiter);
+app.use("/email/send", emailLimiter);
 
 // Router import
 const usersRouter = require('./routes/usersRoute');
+const emailsRouter = require('./routes/emailsRoute')
 app.use(usersRouter);
+app.use(emailsRouter)
 
 // Knex/Objection connection
 const Knex = require('knex');

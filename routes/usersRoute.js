@@ -247,8 +247,17 @@ router.put('/users', async (req, res) => {
 })
 
 // Deleting user
-router.delete('/users', async (req, res) => {
-    res.send();
+router.get('/users', async (req, res) => {
+    const users = await User.query().eager('emails')
+    users.forEach(element=> {
+        // console.log(element.emails)
+        element.emails.forEach(element=> {
+            console.log(element)
+
+        });
+    });
+    // console.log(users)
+    res.send(users);
 })
 
 module.exports = router;
