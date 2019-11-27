@@ -14,14 +14,20 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-router.get('/emails/', async (req, res) => {
-    const emails = (await User.query().where('username', req.body.username).eager('emails'))[0].emails;
+// router.get('/api/emails/', async (req, res) => {
+//     const emails = (await User.query().where('username', req.body.username).eager('emails'))[0].emails;
+//     // const email = user[0]
+
+//     res.send(emails);
+// });
+router.get('/api/emails/', async (req, res) => {
+    const emails = await Email.query();
     // const email = user[0]
 
     res.send(emails);
 });
 
-router.post('/email/send', async (req, res)=> {
+router.post('/api/email/send', async (req, res)=> {
     // Get recieving email data from req
     const { user_id, to_address, content } = req.body;
 

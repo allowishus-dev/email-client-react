@@ -19,7 +19,7 @@ var transporter = nodemailer.createTransport({
 });
 
 // Sign up
-router.post('/users/signup', async (req, res) => {
+router.post('/api/users/signup', async (req, res) => {
     const { username, password, confirmpassword, email, firstname, lastname } = req.body;
 
     // Validation
@@ -53,7 +53,7 @@ router.post('/users/signup', async (req, res) => {
                         from: credentials.from,
                         to: email,
                         subject: 'You signed up for a user at reactnode',
-                        html: '<h1>You signed up!</h1><p>Go to this <a href="http://localhost:9000/users/activate?username='+username+'&key='+key+'">link</a> to activate your user</p>'
+                        html: '<h1>You signed up!</h1><p>Go to this <a href="http://localhost:9000/api/users/activate?username='+username+'&key='+key+'">link</a> to activate your user</p>'
                     };
                     
                     transporter.sendMail(mailOptions, async (error, info) => {
@@ -74,7 +74,7 @@ router.post('/users/signup', async (req, res) => {
 });
 
 // Activate user
-router.get('/users/activate', async (req, res) => {
+router.get('/api/users/activate', async (req, res) => {
     const users = await User.query().select().where({username: req.query.username}).limit(1);
     const validUser = users[0];
 
@@ -99,7 +99,7 @@ router.get('/users/activate', async (req, res) => {
 });
 
 // Login
-router.post('/users/login', async (req, res) => {
+router.post('/api/users/login', async (req, res) => {
     const users = await User.query().select().where({username: req.body.username}).limit(1);
     const validUser = users[0];
 
@@ -131,7 +131,7 @@ router.post('/users/login', async (req, res) => {
 
 // Change password
 // TODO: Unsafe, needs permission check to call
-router.post('/users/change_password', async (req, res) => {
+router.post('/api/users/change_password', async (req, res) => {
     const { username, originalpassword, password, confirmpassword } = req.body
     const users = await User.query().select().where({username: username}).limit(1);
     const validUser = users[0];
@@ -175,7 +175,7 @@ router.post('/users/change_password', async (req, res) => {
 });
 
 // Forgot password request
-router.post('/users/forgot_password', async (req, res) => {
+router.post('/api/users/forgot_password', async (req, res) => {
     const users = await User.query().select().where({username: req.body.username}).limit(1);
     const validUser = users[0];
     
@@ -187,7 +187,7 @@ router.post('/users/forgot_password', async (req, res) => {
                 from: credentials.from,
                 to: validUser.email,
                 subject: 'You requested to change your password at reactnode',
-                html: '<h1>Forgot password?</h1><p>Go to this <a href="http://localhost:9000/users/forgot_password?username='+validUser.username+'&key='+key+'">link</a> to activate your user</p>'
+                html: '<h1>Forgot password?</h1><p>Go to this <a href="http://localhost:9000/api/users/forgot_password?username='+validUser.username+'&key='+key+'">link</a> to activate your user</p>'
             };
             
             transporter.sendMail(mailOptions, async (error, info) => {
@@ -212,7 +212,7 @@ router.post('/users/forgot_password', async (req, res) => {
 })
 
 // Reset password
-router.get('/users/forgot_password', async (req, res) => {
+router.get('/api/users/forgot_password', async (req, res) => {
     const users = await User.query().select().where({username: req.query.username}).limit(1);
     const validUser = users[0];
 
