@@ -10,7 +10,7 @@ router.get("/api/getsession", (req, res) => {
 });
 
 router.get("/api/destroysession", (req, res) => {
-    res.send({ response: req.session.id + " was killed" });
+    res.send({ response: "Logged out" });
     req.session.destroy(function(err) {
     // cannot access session here
     });

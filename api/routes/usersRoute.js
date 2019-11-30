@@ -117,7 +117,7 @@ router.post('/api/users/login', async (req, res) => {
                         req.session.user =  req.session.id ;
                         await Session.query().insert({ user_id: validUser.id, session_id: req.session.id });
 
-                        res.status(200).json({response: req.session.id + " logged in"});
+                        res.status(200).json({response: validUser.username + " logged in"});
                     }
                     else {
                         res.status(401).json({response: "Login failed"});
@@ -186,7 +186,7 @@ router.post('/api/users/change_password', async (req, res) => {
         else {
             bcrypt.hash(newpassword, saltRounds, async (error, hash)=> { 
                 if (!error) {
-                    await User.query().select().where({id: user_id }).update({ password: hash });
+                    await User.query().select().where({id: user_id }).update({ password: hash, key: "" });
                     res.status(200).json({ response: "Password successfully changed" });
                 }
                 else {

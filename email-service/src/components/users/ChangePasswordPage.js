@@ -53,26 +53,24 @@ export default function ChangePasswordPage({ match }) {
         }
     }
 
-    return user.id !== 0 ? (
+    return (
         <div className="main changepassword">
             <h3>Change password</h3>
-            <div className="form-group">
-                <label forhtml="newpassword">Password</label>
-                <input className="form-control" type="password" id="newpassword" name="newpassword" 
-                    value={ password.password }
-                    onChange={ (event)=> setPassword({ ...password, password: event.target.value }) } />
-                <label forhtml="confirm_password">Confirm password</label>
-                <input className="form-control" type="password" id="confirmpassword" name="confirmpassword" 
-                    value={ password.confirmpassword }
-                    onChange={ (event)=> setPassword({ ...password, confirmpassword: event.target.value }) } />
-                <button className="btn btn-primary" onClick={ ()=> changePassword() }>Change</button>
-            </div>
+            { user.id !== 0 ? (
+                <div className="form-group">
+                    <label forhtml="newpassword">Password</label>
+                    <input className="form-control" type="password" id="newpassword" name="newpassword" 
+                        value={ password.password }
+                        onChange={ (event)=> setPassword({ ...password, password: event.target.value }) } />
+                    <label forhtml="confirm_password">Confirm password</label>
+                    <input className="form-control" type="password" id="confirmpassword" name="confirmpassword" 
+                        value={ password.confirmpassword }
+                        onChange={ (event)=> setPassword({ ...password, confirmpassword: event.target.value }) } />
+                    <button className="btn btn-primary" onClick={ ()=> changePassword() }>Change</button>
+                </div>
+                ) : '' 
+            }
 
-            <ShowAlerts status={ status } />
-        </div>
-    ) : (
-        <div className="main changepassword">
-            <h3>Change password</h3>
             <ShowAlerts status={ status } />
         </div>
     );
