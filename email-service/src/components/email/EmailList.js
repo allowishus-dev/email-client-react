@@ -17,7 +17,7 @@ export default function EmailsList({ emails }) {
                 emails.map((email, key) => (
                     <tr key={ key }>
                         <td className="email-col">{ email.to_address }</td>
-                        <td>{ email.content }</td>
+                        <td>{ email.content.slice(0, 44) }</td>
                         <td className="date-col">{ DateFormat(email.sent_at) }</td>
                     </tr>
                 ))

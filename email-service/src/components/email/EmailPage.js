@@ -23,7 +23,8 @@ export default function EmailPage() {
     
     // console.log(emails)
     return (
-        <div className="main">
+        <div className="main previous">
+            <h3>Latest emails sent</h3>
             <EmailList emails={ emails } />
             <ShowAlerts status={ status } />
         </div>

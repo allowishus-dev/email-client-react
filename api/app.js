@@ -25,9 +25,19 @@ app.use("/users/forgot_password", authLimiter);
 app.use("/emails/login", emailLimiter);
 app.use("/email/send", emailLimiter);
 
+const session = require("express-session");
+
+app.use(session({
+    secret: 'this is a much better secret than the one in the documentation',
+    resave: false,
+    saveUninitialized: true,
+}));
+
 // Router import
+const sessionRouter = require('./routes/sessionRoute');
 const usersRouter = require('./routes/usersRoute');
 const emailsRouter = require('./routes/emailsRoute')
+app.use(sessionRouter);
 app.use(usersRouter);
 app.use(emailsRouter)
 

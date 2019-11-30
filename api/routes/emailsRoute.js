@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const Session = require('../models/Session');
 const Email = require('../models/Email');
 const validator = require("email-validator");
 const nodemailer = require('nodemailer');
@@ -21,15 +22,18 @@ var transporter = nodemailer.createTransport({
 //     res.send(emails);
 // });
 router.get('/api/emails/', async (req, res) => {
-    const emails = await Email.query();
+    const session = await Session.query().where({ session_id: req.session.user })
+    // console.log(session[0].user_id)
+    const emails = await Email.query().where({ user_id: session[0].user_id }).orderBy('sent_at', 'desc').limit(10);
     // const email = user[0]
 
     res.send(emails);
 });
 
 router.post('/api/email/send', async (req, res)=> {
+    const session = await Session.query().where({ session_id: req.session.user })
     // Get recieving email data from req
-    const { user_id, to_address, content } = req.body;
+    const { to_address, content } = req.body;
 
     // Validate data
     if (!(to_address && content)) {
@@ -51,11 +55,11 @@ router.post('/api/email/send', async (req, res)=> {
         transporter.sendMail(mailOptions, async (error, info) => {
             if (error) {
                 console.log(error);
-                res.status(503).json({"response": "Email service error"});
+                res.status(503).json({response: "Email service error"});
             }
             else {
                 // Store email data in database
-                await Email.query().insert({"user_id": user_id, "to_address": to_address, "content": content});
+                await Email.query().insert({"user_id": session[0].user_id, "to_address": to_address, "content": content});
                 res.status(200).json({ response: "Email was successfully sent to " + to_address});
             }
         });

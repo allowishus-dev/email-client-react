@@ -12,6 +12,11 @@ exports.up = function(knex) {
             table.timestamp('key_created_at').defaultTo(knex.fn.now());
             table.timestamp('created_at').defaultTo(knex.fn.now());
         })
+        .createTable('sessions', (table) => {
+            table.integer('user_id').unsigned();
+            table.foreign('user_id').references('users.id');
+            table.string('session_id');
+        })
         .createTable('emails', (table) => {
             table.increments('id');
             table.integer('user_id').unsigned();
@@ -25,5 +30,6 @@ exports.up = function(knex) {
 exports.down = function(knex) {
     return knex.schema
         .dropTableIfExists('emails')
+        .dropTableIfExists('sessions')
         .dropTableIfExists('users');
 };
