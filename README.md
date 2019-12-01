@@ -1,14 +1,7 @@
 # EMAIL-CLIENT-REACT
 
 This is a school project where the assignment was to create a client where a user can send an email.
-```mermaid
-graph LR
-A((User)) --> B(React frontend)
-B --> C(Node backend)
-C --> D{Database}
-D --> C
-C --> B
-```
+
  ## Instructions
  - First clone the project
 	 > In the folder **/api** you have the backend Node.js app.
