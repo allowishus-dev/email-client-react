@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import ShowAlerts from '../ShowAlerts';
 
 
-export default function LoginPage() {
+export default function LoginPage(props) {
     const [auth, setAuth] = useState({ username: "", password: ""})
     const [status, showStatus] = useState({ code: 0, message: "" });
+    const {
+        update: [user, setUser]
+    } = {
+        count: useState(""),
+        ...(props.state || {})
+    };
 
     const login = async ()=> {
         const result = await fetch(`/api/users/login`, {
@@ -19,6 +25,7 @@ export default function LoginPage() {
         });
 
         if (result.ok) {
+            setUser("-------");
             showStatus({ code: result.status, message: (await result.json()).response });
             
         }
